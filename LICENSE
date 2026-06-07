@@ -1,0 +1,25 @@
+## License
+
+This project is licensed under the GNU General Public License v3 (GPL v3) - see the [LICENSE](./LICENSE) file for details.
+
+### What This Means for You
+You CAN:
+* Use OmniBorder freely for personal use
+* Modify the source code for your own needs
+* Distribute unmodified copies of the original software
+* Learn from the code and use patterns in your projects
+
+You MUST:
+* Keep the project open-source if you distribute modified versions
+* Release any derivative works under the same GPL v3 license
+* Provide source code access to anyone who receives your modified version
+* Clearly state changes made to the original code
+
+You CANNOT:
+* Close the source of modified versions and sell them commercially
+* Incorporate this code into proprietary/closed-source software
+* Remove copyright notices or license information
+* Hold the developers liable for damages
+
+### Why GPL v3?
+The GPL v3 license ensures that OmniBorder remains free and open forever. It prevents companies or third parties from taking your code, modifying it, and selling it as closed-source software, protecting both the community and the original development.
