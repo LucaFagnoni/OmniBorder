@@ -179,7 +179,7 @@ void MainWindow::UpdateUITexts()
     }
 
     trayIcon->SetIcon(wxIcon("aaaa_MAIN_ICON", wxBITMAP_TYPE_ICO_RESOURCE), 
-                      GetTranslation("TrayTooltip", "OmniBorder Pro"));
+                      GetTranslation("TrayTooltip", "OmniBorder"));
     mainPanel->Layout();
 }
 

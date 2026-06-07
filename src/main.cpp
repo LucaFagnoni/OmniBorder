@@ -31,7 +31,7 @@ wxBEGIN_EVENT_TABLE(MainWindow, wxFrame)
 wxEND_EVENT_TABLE()
 
 MainWindow::MainWindow()
-    : wxFrame(nullptr, wxID_ANY, "OmniBorder Pro",
+    : wxFrame(nullptr, wxID_ANY, "OmniBorder",
               wxDefaultPosition, wxSize(950, 740),
               wxDEFAULT_FRAME_STYLE & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX))
 {
@@ -303,11 +303,11 @@ void MainWindow::ToggleStartupOnWindows(bool enable)
         {
             wxString exePath = wxStandardPaths::Get().GetExecutablePath();
             std::wstring wpath = exePath.ToStdWstring();
-            RegSetValueExW(hKey, L"OmniBorderPro", 0, REG_SZ, (BYTE *)wpath.c_str(), (wpath.size() + 1) * sizeof(wchar_t));
+            RegSetValueExW(hKey, L"OmniBorder", 0, REG_SZ, (BYTE *)wpath.c_str(), (wpath.size() + 1) * sizeof(wchar_t));
         }
         else
         {
-            RegDeleteValueW(hKey, L"OmniBorderPro");
+            RegDeleteValueW(hKey, L"OmniBorder");
         }
         RegCloseKey(hKey);
     }
@@ -319,7 +319,7 @@ bool MainWindow::CheckStartupOnWindows()
     LONG lRes = RegOpenKeyExW(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_READ, &hKey);
     bool exists = false;
     if (lRes == ERROR_SUCCESS) {
-        lRes = RegQueryValueExW(hKey, L"OmniBorderPro", nullptr, nullptr, nullptr, nullptr);
+        lRes = RegQueryValueExW(hKey, L"OmniBorder", nullptr, nullptr, nullptr, nullptr);
         if (lRes == ERROR_SUCCESS) exists = true;
         RegCloseKey(hKey);
     }

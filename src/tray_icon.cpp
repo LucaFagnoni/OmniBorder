@@ -14,11 +14,11 @@ TrayIcon::TrayIcon(MainWindow *parent) : frame(parent)
     wxIcon icon = wxIcon("aaaa_MAIN_ICON", wxBITMAP_TYPE_ICO_RESOURCE);
     if (icon.IsOk())
     {
-        SetIcon(icon, "OmniBorder Pro");
+        SetIcon(icon, "OmniBorder");
     }
     else
     {
-        SetIcon(wxArtProvider::GetIcon(wxART_EXECUTABLE_FILE, wxART_OTHER, wxSize(16, 16)), "OmniBorder Pro");
+        SetIcon(wxArtProvider::GetIcon(wxART_EXECUTABLE_FILE, wxART_OTHER, wxSize(16, 16)), "OmniBorder");
     }
 }
 
@@ -64,11 +64,11 @@ void TrayIcon::ShowTrayIcon()
         wxIcon icon = wxIcon("aaaa_MAIN_ICON", wxBITMAP_TYPE_ICO_RESOURCE);
         if (icon.IsOk())
         {
-            SetIcon(icon, "OmniBorder Pro");
+            SetIcon(icon, "OmniBorder");
         }
         else
         {
-            SetIcon(wxArtProvider::GetIcon(wxART_EXECUTABLE_FILE, wxART_OTHER, wxSize(16, 16)), "OmniBorder Pro");
+            SetIcon(wxArtProvider::GetIcon(wxART_EXECUTABLE_FILE, wxART_OTHER, wxSize(16, 16)), "OmniBorder");
         }
         isIconVisible = true;
     }
