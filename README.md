@@ -109,6 +109,13 @@ Before compiling OmniBorder, ensure you have the following installed:
    build\bin\Release\OmniBorder.exe
    ```
 
+---
+### Preview
+
+![App Preview](assets/preview.png)
+
+
+
 ### Build Output Structure
 
 ```
@@ -169,6 +176,10 @@ By submitting a Pull Request, you agree that:
 - Update documentation if adding new features
 
 ---
+
+### Language Support / Soporte de Idiomas
+- English: Full support for the interface, documentation, and issues.
+- Español: Soporte completo para la interfaz, documentación y solución de problemas.
 
 ## License
 
