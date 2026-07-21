@@ -28,22 +28,22 @@ jobs:
       - name: Setup MSVC Developer Environment
         uses: ilammy/msvc-dev-cmd@v1
 
-      # 3. Installa wxWidgets tramite vcpkg
-      - name: Install wxWidgets
+      # 3. Installa wxWidgets in versione STATICA tramite vcpkg
+      - name: Install wxWidgets (Static)
         run: |
-          vcpkg install wxwidgets:x64-windows
+          vcpkg install wxwidgets:x64-windows-static
 
-      # 4. Configura il progetto con CMake usando il toolchain di vcpkg
+      # 4. Configura CMake usando il triplet statico di vcpkg
       - name: Configure CMake
         run: |
-          cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          cmake -B build -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
 
       # 5. Compila il progetto in modalità Release
       - name: Build Project
         run: |
           cmake --build build --config Release
 
-      # 6. Pubblica la Release allegando l'eseguibile trovato
+      # 6. Pubblica la Release allegando l'eseguibile autonomo
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
