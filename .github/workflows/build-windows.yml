@@ -28,28 +28,38 @@ jobs:
       - name: Setup MSVC Developer Environment
         uses: ilammy/msvc-dev-cmd@v1
 
-      # 3. Installa wxWidgets in versione STATICA tramite vcpkg
-      - name: Install wxWidgets (Static)
+      # 3. Installa wxWidgets (versione x64-windows)
+      - name: Install wxWidgets
         run: |
-          vcpkg install wxwidgets:x64-windows-static
+          vcpkg install wxwidgets:x64-windows
 
-      # 4. Configura CMake usando il triplet statico di vcpkg
+      # 4. Configura CMake usando il toolchain di vcpkg
       - name: Configure CMake
         run: |
-          cmake -B build -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
 
-      # 5. Compila il progetto in modalità Release
+      # 5. Compila il progetto in modalità Release (vcpkg copierà le DLL nella cartella dell'eseguibile)
       - name: Build Project
         run: |
           cmake --build build --config Release
 
-      # 6. Pubblica la Release allegando l'eseguibile autonomo
+      # 6. Individua la cartella dell'eseguibile e crea un archivio .zip completo con EXE + DLL
+      - name: Package Build Output
+        shell: powershell
+        run: |
+          $exe = Get-ChildItem -Path build -Filter "OmniBorder.exe" -Recurse | Select-Object -First 1
+          if (-not $exe) { throw "OmniBorder.exe non trovato nella cartella build!" }
+          $binDir = $exe.Directory.FullName
+          Write-Host "Impacchettamento file da: $binDir"
+          Compress-Archive -Path "$binDir\*" -DestinationPath "OmniBorder-Windows-x64.zip"
+
+      # 7. Pubblica la Release allegando il file ZIP
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ inputs.version }}
           name: OmniBorder ${{ inputs.version }}
-          files: build/**/OmniBorder.exe
+          files: OmniBorder-Windows-x64.zip
           draft: false
           prerelease: false
         env:
