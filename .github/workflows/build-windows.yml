@@ -1,0 +1,53 @@
+name: Build & Release OmniBorder
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Tag e Nome della Release (es. v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+
+# Permessi necessari per creare ed inserire file nelle Release di GitHub
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      # 1. Scarica il codice dal repository originale
+      - name: Checkout external repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'ndend-dev/OmniBorder'
+          ref: 'main' # Cambia in 'master' se il branch principale si chiama così
+          submodules: recursive
+
+      # 2. Installa la libreria wxWidgets richiesta usando vcpkg
+      - name: Install wxWidgets
+        run: |
+          vcpkg install wxwidgets:x64-windows
+
+      # 3. Configura il progetto con CMake collegando vcpkg
+      - name: Configure CMake
+        run: |
+          cmake -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+
+      # 4. Compila il progetto in modalità Release
+      - name: Build Project
+        run: |
+          cmake --build build --config Release
+
+      # 5. Crea la Release su GitHub e allega il file .exe compilato
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.version }}
+          name: OmniBorder ${{ inputs.version }}
+          files: build/bin/Release/OmniBorder.exe
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
